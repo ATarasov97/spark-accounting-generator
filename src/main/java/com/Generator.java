@@ -5,8 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.apache.spark.SparkConf;
+import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
+import org.apache.spark.sql.SQLContext;
 import org.apache.spark.sql.SparkSession;
 
 public class Generator {
@@ -37,11 +40,16 @@ public class Generator {
         SparkSession spark = SparkSession
                 .builder()
                 .appName("Java Spark Hive Example")
-                .config("spark.sql.warehouse.dir", warehouseLocation)
+                .config("spark.sql.warehouse.dir", warehouseLocation).master("local")
                 .enableHiveSupport()
                 .getOrCreate();
-        spark.sql("CREATE TABLE IF NOT EXISTS seller (key INT, inn_1 STRING, kpp_1 INT, inn_2 STRING," +
-                " kpp_2 INT, money DOUBLE, tax DOUBLE");
+        //set up the spark configuration and create contexts
+//        SparkConf sparkConf = new SparkConf().setAppName("SparkSessionZipsExample").setMaster("local");
+//// your handle to SparkContext to access other context like SQLContext
+//        JavaSparkContext sc = new JavaSparkContext(sparkConf);
+//        SQLContext spark = new org.apache.spark.sql.SQLContext(sc);
+//        spark.sql("CREATE TABLE IF NOT EXISTS seller (key INT, inn_1 STRING, kpp_1 INT, inn_2 STRING," +
+//                " kpp_2 INT, money DOUBLE, tax DOUBLE)");
         List<Record> records = new ArrayList<>();
         for (int key = 1; key < 100; key++) {
             Record record = new Record();
