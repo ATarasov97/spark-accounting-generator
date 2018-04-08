@@ -10,6 +10,7 @@ import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SQLContext;
+import org.apache.spark.sql.SparkSession;
 
 public class Generator {
 
@@ -35,22 +36,22 @@ public class Generator {
 
 
     public static void main(String[] args) {
-//        String warehouseLocation = new File("spark-warehouse").getAbsolutePath();
-//        SparkSession spark = SparkSession
-//                .builder()
-//                .appName("Java Spark Hive Example")
-//                .config("spark.sql.warehouse.dir", warehouseLocation).master("local")
-//                .enableHiveSupport()
-//                .getOrCreate();
+        String warehouseLocation = new File("spark-warehouse").getAbsolutePath();
+        SparkSession spark = SparkSession
+                .builder()
+                .appName("Java Spark Hive Example")
+                .config("spark.sql.warehouse.dir", warehouseLocation).master("local[*]")
+                .enableHiveSupport()
+                .getOrCreate();
 
 
         //set up the spark configuration and create contexts
-        SparkConf sparkConf = new SparkConf().setAppName("SparkSessionZipsExample").setMaster("local");
-        JavaSparkContext sc = new JavaSparkContext(sparkConf);
-        SQLContext spark = new org.apache.spark.sql.SQLContext(sc);
+//        SparkConf sparkConf = new SparkConf().setAppName("SparkSessionZipsExample").setMaster("local");
+//        JavaSparkContext sc = new JavaSparkContext(sparkConf);
+//        SQLContext spark = new org.apache.spark.sql.SQLContext(sc);
 
 
-        spark.sql("CREATE TABLE IF NOT EXISTS seller (key INT, inn_1 STRING, kpp_1 INT, inn_2 STRING," +
+        spark.sql("CREATE TABLE IF NOT EXISTS Hive.seller (key INT, inn_1 STRING, kpp_1 INT, inn_2 STRING," +
                 " kpp_2 INT, money DOUBLE, tax DOUBLE)");
         List<Record> records = new ArrayList<>();
         for (int key = 1; key < 100; key++) {
