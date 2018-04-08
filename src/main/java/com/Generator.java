@@ -61,7 +61,7 @@ public class Generator {
             String kpp2 = generateKPP();
             double money = random.nextFloat();
             double tax = random.nextFloat();
-            String select = "select " + key + " as id, " + inn1 + " as inn_1, " + kpp1 + " as kpp_1, " +
+            String select = "select " + key + " as key, " + inn1 + " as inn_1, " + kpp1 + " as kpp_1, " +
                     inn2 + " as inn_2, " + kpp2 + " as kpp_2, " + money +
                     " as money, " + tax + " as tax";
             Dataset<Row> recordsDF = spark.sql(select);
