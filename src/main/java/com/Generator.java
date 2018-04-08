@@ -52,10 +52,14 @@ public class Generator {
 //        JavaSparkContext sc = new JavaSparkContext(sparkConf);
 //        SQLContext spark = new org.apache.spark.sql.SQLContext(sc);
 
-
-        spark.sql("CREATE TABLE IF NOT EXISTS seller1 (key INT, inn_1 STRING, kpp_1 INT, inn_2 STRING," +
+        spark.sql("DROP TABLE IF EXISTS seller");
+        spark.sql("DROP TABLE IF EXISTS customer");
+        spark.sql("CREATE TABLE IF NOT EXISTS seller (key INT, inn_1 STRING, kpp_1 INT, inn_2 STRING," +
                 " kpp_2 INT, money DOUBLE, tax DOUBLE)");
-        List<Record> records = new ArrayList<>();
+        spark.sql("CREATE TABLE IF NOT EXISTS customer (key INT, inn_1 STRING, kpp_1 INT, inn_2 STRING," +
+                " kpp_2 INT, money DOUBLE, tax DOUBLE)");
+        List<Record> seller = new ArrayList<>();
+        List<Record> customer = new ArrayList<>();
 //        for (int key = 1; key < 100; key++) {
 //            String inn1 = generateINN();
 //            String inn2 = generateINN();
@@ -69,26 +73,44 @@ public class Generator {
 //            Dataset<Row> recordsDF = spark.sql(select);
 //            recordsDF.write().mode("append").saveAsTable("seller1");
 //        }
-        for (int key =1; key < 100; key++) {
-            Record record = new Record();
+        for (int key =1; key < 1000000; key++) {
             String inn1 = generateINN();
             String inn2 = generateINN();
             String kpp1 = generateKPP();
             String kpp2 = generateKPP();
             double money = random.nextFloat();
             double tax = random.nextFloat();
-            record.setInn_1(inn1);
-            record.setInn_2(inn2);
-            record.setKey(key);
-            record.setKpp_1(kpp1);
-            record.setKpp_2(kpp2);
-            record.setMoney(money);
-            record.setTax(tax);
-            records.add(record);
+            Record sellerRecord = new Record();
+            sellerRecord.setKey(key);
+            sellerRecord.setInn_1(inn1);
+            sellerRecord.setKpp_1(kpp1);
+            sellerRecord.setInn_2(inn2);
+            sellerRecord.setKpp_2(kpp2);
+            sellerRecord.setMoney(money);
+            sellerRecord.setTax(tax);
+            seller.add(sellerRecord);
+            Record customerRecord = new Record();
+            customerRecord.setKey(key);
+            customerRecord.setInn_1(inn2);
+            customerRecord.setKpp_1(kpp2);
+            if (random.nextFloat() < 0.05) {
+                customerRecord.setInn_2(inn1.replace("0", "8"));
+            }
+            customerRecord.setInn_2(inn1);
+            customerRecord.setKpp_2(kpp1);
+            customerRecord.setMoney(money);
+            customerRecord.setTax(tax);
+
         }
-        Dataset<Row> recordsDF = spark.createDataFrame(records, Record.class);
-        recordsDF.write().mode("append").saveAsTable("seller2");
-        Dataset<Row> rrr = spark.sql("SELECT * FROM default.seller2");
-        rrr.show();
+
+        Dataset<Row> sellerDF = spark.createDataFrame(seller, Record.class);
+        sellerDF.write().mode("append").saveAsTable("seller");
+        Dataset<Row> customerDF = spark.createDataFrame(seller, Record.class);
+        customerDF.write().mode("append").saveAsTable("customer");
+
+        Dataset<Row> sellerShow = spark.sql("SELECT * FROM default.seller");
+        sellerShow.show();
+        Dataset<Row> customerShow = spark.sql("SELECT * FROM default.customer");
+        customerShow.show();
     }
 }
