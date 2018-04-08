@@ -19,7 +19,7 @@ public class Generator {
     private static Random random = new Random();
     private static String[] regions = {"26", "77", "52", "39", "38"};
 
-    private static String generateINN() {
+    private String generateINN() {
         StringBuilder inn = new StringBuilder();
         inn.append(regions[random.nextInt(regions.length)]);
         for (int i = 0; i < 10; i++) {
@@ -28,7 +28,7 @@ public class Generator {
         return inn.toString();
     }
 
-    private static String generateKPP() {
+    private String generateKPP() {
         StringBuilder kpp = new StringBuilder();
         for (int i = 0; i < 6; i++) {
             kpp.append(random.nextInt(10));
@@ -36,39 +36,12 @@ public class Generator {
         return kpp.toString();
     }
 
-
-    public static void main(String[] args) {
-        String warehouseLocation = new File("spark-warehouse").getAbsolutePath();
-        SparkSession spark = SparkSession
-                .builder()
-                .appName("Java Spark Hive Example")
-                .config("spark.sql.warehouse.dir", warehouseLocation).master("local[*]")
-                .enableHiveSupport()
-                .getOrCreate();
-
-
-        //set up the spark configuration and create contexts
-//        SparkConf sparkConf = new SparkConf().setAppName("SparkSessionZipsExample").setMaster("local");
-//        JavaSparkContext sc = new JavaSparkContext(sparkConf);
-//        SQLContext spark = new org.apache.spark.sql.SQLContext(sc);
-
+    public void generateSellerAndCustomerTables(SparkSession spark) {
         spark.sql("DROP TABLE IF EXISTS seller");
         spark.sql("DROP TABLE IF EXISTS customer");
         List<Record> seller = new ArrayList<>();
         List<Record> customer = new ArrayList<>();
-//        for (int key = 1; key < 100; key++) {
-//            String inn1 = generateINN();
-//            String inn2 = generateINN();
-//            String kpp1 = generateKPP();
-//            String kpp2 = generateKPP();
-//            double money = random.nextFloat();
-//            double tax = random.nextFloat();
-//            String select = "select " + key + " as key, " + inn1 + " as inn_1, " + kpp1 + " as kpp_1, " +
-//                    inn2 + " as inn_2, " + kpp2 + " as kpp_2, " + money +
-//                    " as money, " + tax + " as tax";
-//            Dataset<Row> recordsDF = spark.sql(select);
-//            recordsDF.write().mode("append").saveAsTable("seller1");
-//        }
+
         for (int key =1; key < 1000000; key++) {
             String inn1 = generateINN();
             String inn2 = generateINN();
@@ -103,6 +76,21 @@ public class Generator {
         sellerDF.write().mode("append").saveAsTable("seller");
         Dataset<Row> customerDF = spark.createDataFrame(seller, Record.class);
         customerDF.write().mode("append").saveAsTable("customer");
+
+    }
+
+
+    public static void main(String[] args) {
+        String warehouseLocation = new File("spark-warehouse").getAbsolutePath();
+        SparkSession spark = SparkSession
+                .builder()
+                .appName("Java Spark Hive Example")
+                .config("spark.sql.warehouse.dir", warehouseLocation).master("local[*]")
+                .enableHiveSupport()
+                .getOrCreate();
+
+//        Generator generator = new Generator();
+//        generator.generateSellerAndCustomerTables(spark);
 
         Dataset<Row> sellerShow = spark.sql("SELECT * FROM default.seller");
         sellerShow.show();
