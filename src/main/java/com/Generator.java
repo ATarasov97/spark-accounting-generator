@@ -51,16 +51,22 @@ public class Generator {
 //        SQLContext spark = new org.apache.spark.sql.SQLContext(sc);
 
 
-        spark.sql("CREATE TABLE IF NOT EXISTS seller (key INT, inn_1 STRING, kpp_1 INT, inn_2 STRING," +
+        spark.sql("CREATE TABLE IF NOT EXISTS seller1 (key INT, inn_1 STRING, kpp_1 INT, inn_2 STRING," +
                 " kpp_2 INT, money DOUBLE, tax DOUBLE)");
         List<Record> records = new ArrayList<>();
         for (int key = 1; key < 100; key++) {
-            Record record = new Record();
-            record.setKey(key);
-            record.setInn_1("a" + key);
+            String inn1 = generateINN();
+            String inn2 = generateINN();
+            String kpp1 = generateKPP();
+            String kpp2 = generateKPP();
+            double money = random.nextFloat();
+            double tax = random.nextFloat();
+            String select = "select " + key + " as id, " + inn1 + " as inn_1, " + kpp1 + " as kpp_1, " +
+                    inn2 + " as inn_2, " + kpp2 + " as kpp_2, " + money +
+                    " as money, " + tax + " as tax";
+            Dataset<Row> recordsDF = spark.sql(select);
+            recordsDF.write().mode("append").saveAsTable("seller1");
         }
-        Dataset<Row> recordsDF = spark.sql("select 1 as id, 10 as money");
-        recordsDF.write().mode("append").saveAsTable("seller1");
         spark.sql("SELECT * FROM seller1");
     }
 }
