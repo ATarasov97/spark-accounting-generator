@@ -59,7 +59,7 @@ public class Generator {
             record.setKey(key);
             record.setInn_1("a" + key);
         }
-        Dataset<Row> recordsDF = spark.createDataFrame(records, Record.class);
+        Dataset<Row> recordsDF = spark.sql("select 1 as id, 10 as money");
         recordsDF.write().mode("append").saveAsTable("seller1");
         spark.sql("SELECT * FROM seller1");
     }
