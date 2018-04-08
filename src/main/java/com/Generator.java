@@ -54,10 +54,6 @@ public class Generator {
 
         spark.sql("DROP TABLE IF EXISTS seller");
         spark.sql("DROP TABLE IF EXISTS customer");
-        spark.sql("CREATE TABLE IF NOT EXISTS seller (key INT, inn_1 STRING, kpp_1 INT, inn_2 STRING," +
-                " kpp_2 INT, money DOUBLE, tax DOUBLE)");
-        spark.sql("CREATE TABLE IF NOT EXISTS customer (key INT, inn_1 STRING, kpp_1 INT, inn_2 STRING," +
-                " kpp_2 INT, money DOUBLE, tax DOUBLE)");
         List<Record> seller = new ArrayList<>();
         List<Record> customer = new ArrayList<>();
 //        for (int key = 1; key < 100; key++) {
