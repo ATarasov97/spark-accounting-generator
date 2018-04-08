@@ -60,7 +60,7 @@ public class Generator {
             record.setInn_1("a" + key);
         }
         Dataset<Row> recordsDF = spark.createDataFrame(records, Record.class);
-        recordsDF.write().mode("append").saveAsTable("seller");
+        recordsDF.write().mode("append").saveAsTable("seller1");
         spark.sql("SELECT * FROM seller");
     }
 }
