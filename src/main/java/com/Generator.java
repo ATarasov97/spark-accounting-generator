@@ -61,6 +61,6 @@ public class Generator {
         }
         Dataset<Row> recordsDF = spark.createDataFrame(records, Record.class);
         recordsDF.write().mode("append").saveAsTable("seller1");
-        spark.sql("SELECT * FROM seller");
+        spark.sql("SELECT * FROM seller1");
     }
 }
