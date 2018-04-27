@@ -16,7 +16,7 @@ apply plugin: 'application'
 
 sourceCompatibility = 1.8
 
-mainClassName = 'Main'
+mainClassName = src.main.java.com.DiffChecker
 
 repositories {
     mavenCentral()
@@ -34,4 +34,3 @@ dependencies {
     compile group: 'org.apache.spark', name: 'spark-hive_2.11', version: '2.3.0'
 
 }
-
