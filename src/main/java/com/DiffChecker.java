@@ -43,7 +43,7 @@ public class DiffChecker {
                                       "  kpp_2,\n" +
                                       "  money,\n" +
                                       "  tax\n" +
-                                      "having count(*) > 1\n";
+                                      "having count(*) = 1 \n";
 
   public static void DiffTableGenerate(SparkSession spark) {
     Dataset<Row> diffDF = spark.sql(SQL_STRING);
