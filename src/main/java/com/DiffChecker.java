@@ -48,7 +48,8 @@ public class DiffChecker {
   public static void DiffTableGenerate(SparkSession spark) {
     Dataset<Row> diffDF = spark.sql(SQL_STRING);
     diffDF.show();
-    diffDF.write().mode("append").saveAsTable("seller");
+    spark.sql("DROP TABLE IF EXISTS changes");
+    diffDF.write().mode("append").saveAsTable("changes");
 
   }
 
