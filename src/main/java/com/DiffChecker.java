@@ -49,7 +49,7 @@ public class DiffChecker {
   public static String SQL_MIST = "SELECT * from diff where table_name = 'customer'";
 
 
-  public static String SQL_MIST_COUNT = "SELECT inn_2 as customer, count(*) from diff where table_name = 'customer'\n"+
+  public static String SQL_MIST_COUNT = "SELECT inn_2 as customer, count(*) as COUNT from diff where table_name = 'customer' \n"+
       "GROUP BY inn_2";
 
   public static void DiffTableGenerate(SparkSession spark) {
