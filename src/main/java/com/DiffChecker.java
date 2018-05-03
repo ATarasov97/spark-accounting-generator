@@ -62,7 +62,8 @@ public class DiffChecker {
         .config("spark.sql.warehouse.dir", warehouseLocation).master("local[*]")
         .enableHiveSupport()
         .getOrCreate();
-
+    Generator g = new Generator();
+    g.generateSellerAndCustomerTables(spark);
     DiffTableGenerate(spark);
   }
 }

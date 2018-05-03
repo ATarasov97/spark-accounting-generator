@@ -69,12 +69,12 @@ public class Generator {
             customerRecord.setKpp_2(kpp1);
             customerRecord.setMoney(money);
             customerRecord.setTax(tax);
-
+            customer.add(customerRecord);
         }
 
         Dataset<Row> sellerDF = spark.createDataFrame(seller, Record.class);
         sellerDF.write().mode("append").saveAsTable("seller");
-        Dataset<Row> customerDF = spark.createDataFrame(seller, Record.class);
+        Dataset<Row> customerDF = spark.createDataFrame(customer, Record.class);
         customerDF.write().mode("append").saveAsTable("customer");
 
     }
