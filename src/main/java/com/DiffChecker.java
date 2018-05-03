@@ -15,7 +15,8 @@ public class DiffChecker {
                                       "  kpp_2,\n" +
                                       "  money,\n" +
                                       "  tax\n" +
-                                      " from (\n" +
+                                      " FROM\n" +
+                                      "(\n" +
                                       "  select\n" +
                                       "'seller' as table_name\n" +
                                       "  inn_1,\n" +
