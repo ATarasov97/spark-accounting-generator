@@ -46,14 +46,12 @@ public class DiffChecker {
       "  tax\n" +
       "having count(*) = 1  \n";
 
-  public static String SQL_COUNTER = "SELECT INN, type, count(*)\n" +
-      "FROM (\n" +
-      "select inn_1 as INN, 'seller' as type from diff\n" +
-      "UNION ALL\n"+
-      "select inn_2 as INN, 'customer' as type from diff\n" +
-      ") tmp\n"+
-      "GROUP BY INN, type";
-  
+  public static String SQL_MIST = "SELECT * from diff where table_name = 'customer'";
+
+
+  public static String SQL_MIST_COUNT = "SELECT inn_2 as customer, count(*) from diff where table_name = 'customer'\n"+
+      "GROUP BY inn_2";
+
   public static void DiffTableGenerate(SparkSession spark) {
     Dataset<Row> diffDF = spark.sql(SQL_STRING);
     diffDF.show();
@@ -62,10 +60,14 @@ public class DiffChecker {
   }
 
   public static void DiffCounterGenerate(SparkSession spark) {
-    Dataset<Row> diffDF = spark.sql(SQL_COUNTER);
+    Dataset<Row> diffDF = spark.sql(SQL_MIST);
     diffDF.show();
-    spark.sql("DROP TABLE IF EXISTS diff_counter");
-    //diffDF.write().mode("append").saveAsTable("diff_counter");
+    spark.sql("DROP TABLE IF EXISTS mistakes");
+    diffDF.write().mode("append").saveAsTable("mistakes");
+    diffDF = spark.sql(SQL_MIST_COUNT);
+    diffDF.show();
+    spark.sql("DROP TABLE IF EXISTS mistakes_count");
+    diffDF.write().mode("append").saveAsTable("mistakes_count");
   }
 
   public static void main(String[] args) {
@@ -78,7 +80,7 @@ public class DiffChecker {
         .getOrCreate();
     //Generator g = new Generator();
     //g.generateSellerAndCustomerTables(spark);
-    DiffTableGenerate(spark);
+    //DiffTableGenerate(spark);
     DiffCounterGenerate(spark);
   }
 }
