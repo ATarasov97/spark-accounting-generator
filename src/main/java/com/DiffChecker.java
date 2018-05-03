@@ -8,7 +8,7 @@ import org.apache.spark.sql.SparkSession;
 
 public class DiffChecker {
   private static String SQL_STRING = "select\n" +
-                                      "MIN(table_name) as 'table_name',\n" +
+                                      "MIN(table_name) as table_name,\n" +
                                       "  inn_1,\n" +
                                       "  kpp_1,\n" +
                                       "  inn_2,\n" +
@@ -24,7 +24,7 @@ public class DiffChecker {
                                       "  kpp_2,\n" +
                                       "  money,\n" +
                                       "  tax\n" +
-                                      "  from seller\n" +
+                                      "  from default.seller\n" +
                                       "  union all\n" +
                                       "  select\n" +
                                       "'customer' as table_name\n" +
@@ -34,7 +34,7 @@ public class DiffChecker {
                                       "  kpp_2,\n" +
                                       "  money,\n" +
                                       "  tax\n" +
-                                      "  from customer\n" +
+                                      "  from default.customer\n" +
                                       ") tmp\n" +
                                       "group by\n" +
                                       "  inn_1,\n" +
