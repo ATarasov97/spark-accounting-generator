@@ -8,7 +8,7 @@ import org.apache.spark.sql.SparkSession;
 
 public class DiffChecker {
   private static String SQL_STRING = "select\n" +
-                                      "MIN(table_name) as table_name,\n" +
+                                      "MIN(table_name) as 'table_name',\n" +
                                       "  inn_1,\n" +
                                       "  kpp_1,\n" +
                                       "  inn_2,\n" +
