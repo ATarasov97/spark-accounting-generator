@@ -76,10 +76,9 @@ public class DiffChecker {
 
   public static void diffCsvGenerate(SparkSession spark) {
     Dataset<Row> df = spark.sql("select * from mistakes");
-    df.show();
-//    toCsv(df, "mistakes");
-//    df = spark.sql("select * from mistakes_count");
-//    toCsv(df, "mistakescount");
+    toCsv(df, "mistakes");
+    df = spark.sql("select * from mistakes_count");
+    toCsv(df, "mistakescount");
   }
 
   public static void main(String[] args) {
