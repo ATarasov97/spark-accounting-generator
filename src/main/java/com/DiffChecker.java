@@ -52,14 +52,14 @@ public class DiffChecker {
   public static String SQL_MIST_COUNT = "SELECT inn_2 as customer, count(*) as COUNT from diff where table_name = 'customer' \n"+
       "GROUP BY inn_2";
 
-  public static void DiffTableGenerate(SparkSession spark) {
+  public static void diffTableGenerate(SparkSession spark) {
     Dataset<Row> diffDF = spark.sql(SQL_STRING);
     diffDF.show();
     spark.sql("DROP TABLE IF EXISTS diff");
     diffDF.write().mode("append").saveAsTable("diff");
   }
 
-  public static void DiffCounterGenerate(SparkSession spark) {
+  public static void diffCounterGenerate(SparkSession spark) {
     Dataset<Row> diffDF = spark.sql(SQL_MIST);
     diffDF.show();
     spark.sql("DROP TABLE IF EXISTS mistakes");
@@ -68,6 +68,18 @@ public class DiffChecker {
     diffDF.show();
     spark.sql("DROP TABLE IF EXISTS mistakes_count");
     diffDF.write().mode("append").saveAsTable("mistakes_count");
+  }
+
+  public static void toCsv(Dataset<Row> df,String name){
+    df.write().csv(name+".csv");
+  }
+
+  public static void diffCsvGenerate(SparkSession spark) {
+    Dataset<Row> df = spark.sql("select * from mistakes");
+    df.show();
+//    toCsv(df, "mistakes");
+//    df = spark.sql("select * from mistakes_count");
+//    toCsv(df, "mistakescount");
   }
 
   public static void main(String[] args) {
@@ -81,6 +93,6 @@ public class DiffChecker {
     //Generator g = new Generator();
     //g.generateSellerAndCustomerTables(spark);
     //DiffTableGenerate(spark);
-    DiffCounterGenerate(spark);
+    diffCsvGenerate(spark);
   }
 }
