@@ -89,12 +89,12 @@ public class Generator {
                 .enableHiveSupport()
                 .getOrCreate();
 
-//        Generator generator = new Generator();
-//        generator.generateSellerAndCustomerTables(spark);
+        Generator generator = new Generator();
+        generator.generateSellerAndCustomerTables(spark);
 
-        Dataset<Row> sellerShow = spark.sql("SELECT * FROM default.seller");
-        sellerShow.show();
-        Dataset<Row> customerShow = spark.sql("SELECT * FROM default.customer");
-        customerShow.show();
+        //Dataset<Row> sellerShow = spark.sql("SELECT * FROM default.seller");
+       // sellerShow.show();
+       // Dataset<Row> customerShow = spark.sql("SELECT * FROM default.customer");
+        //customerShow.show();
     }
 }
