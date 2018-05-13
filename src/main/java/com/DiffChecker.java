@@ -7,6 +7,8 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 
 public class DiffChecker {
+  private static String s = "select * from ()";
+
   private static String SQL_STRING =
       "select\n" +
       "MIN(table_name) as table_name,\n" +
@@ -45,8 +47,7 @@ public class DiffChecker {
       "  inn_2,\n" +
       "  kpp_2,\n" +
       "  money,\n" +
-      "  tax\n" +
-      "having count(*) = 1  \n";
+      "  tax\n" ;
 
   public static String SQL_MIST = "SELECT * from diff where table_name = 'customer'";
 
