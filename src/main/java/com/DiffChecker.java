@@ -7,7 +7,7 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 
 public class DiffChecker {
-  private static String SQL_STRING = "select\n" +
+  private static String SQL_STRING = "select count* from (select\n" +
       "MIN(table_name) as table_name,\n" +
       "  inn_1,\n" +
       "  kpp_1,\n" +
@@ -44,7 +44,7 @@ public class DiffChecker {
       "  kpp_2,\n" +
       "  money,\n" +
       "  tax\n" +
-      "having count(*) = 1  \n";
+      "having count(*) = 1)  \n";
 
   public static String SQL_MIST = "SELECT * from diff where table_name = 'customer'";
 
@@ -52,7 +52,7 @@ public class DiffChecker {
   public static String SQL_MIST_COUNT =
       "select tmp1.region as REG, " +
           "tmp1.COUNT as MISTAKES, " +
-          "tmp2.COUNT as ALL " +
+          "tmp2.KEK as ALL " +
           "from(" +
 
           "select region, sum(count) as COUNT from" +
@@ -62,7 +62,7 @@ public class DiffChecker {
           "where table_name = 'customer' \n" +
           "GROUP BY inn_2) tmp group by region ) tmp1 " +
           "right join " +
-          "(select region , count(*) as COUNT from " +
+          "(select region , count(*) as KEK from " +
           "(select substr(inn_2,0,2) as region from default.customer) group by region) tmp2 " +
           "on tmp1.region = tmp2.region";
 
@@ -92,7 +92,7 @@ public class DiffChecker {
   public static void diffCsvGenerate(SparkSession spark) {
     Dataset<Row> df = spark.sql("select * from mistakes");
     //toCsv(df, "mistakes");
-    df = spark.sql(SQL_MIST_COUNT);
+    df = spark.sql(SQL_STRING);
     df.show();
     //toCsv(df, "mistakesCountByRegion");
   }
