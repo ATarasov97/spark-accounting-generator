@@ -51,7 +51,7 @@ public class DiffChecker {
 
   public static String SQL_MIST_COUNT =
       "select tmp1.region as REG, " +
-          "tmp1.MISTAKES as MISTAKES, " +
+          "tmp1.COUNT as MISTAKES, " +
           "tmp2.COUNT as ALL " +
           "from(" +
 
