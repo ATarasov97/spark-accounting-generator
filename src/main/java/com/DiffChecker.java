@@ -7,7 +7,7 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 
 public class DiffChecker {
-  private static String SQL_STRING = "select count* from (select\n" +
+  private static String SQL_STRING = "select count(*) from (select\n" +
       "MIN(table_name) as table_name,\n" +
       "  inn_1,\n" +
       "  kpp_1,\n" +
