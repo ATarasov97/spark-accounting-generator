@@ -47,8 +47,7 @@ public class DiffChecker {
       "  inn_2,\n" +
       "  kpp_2,\n" +
       "  money,\n" +
-      "  tax " +
-          "having count(table_name) = 1\n" ;
+      "  tax " ;
 
   public static String SQL_MIST = "SELECT * from diff where table_name = 'customer'";
 
