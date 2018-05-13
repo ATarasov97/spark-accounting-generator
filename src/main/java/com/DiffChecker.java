@@ -49,14 +49,12 @@ public class DiffChecker {
   public static String SQL_MIST = "SELECT * from diff where table_name = 'customer'";
 
 
-  public static String SQL_MIST_COUNT = "select region, " +
-      " count(*) as MISTAKES " +
-      "from " +
-      "(SELECT substr(inn_2,0,2) as region, " +
+  public static String SQL_MIST_COUNT =
+      "SELECT substr(inn_2,0,2) as region," +
+      " count(*) as COUNT " +
       "from diff " +
       "where table_name = 'customer' \n" +
-      "GROUP BY inn_2) tmp " +
-      "group by region";
+      "GROUP BY inn_2) tmp group by region ";
 
   public static void diffTableGenerate(SparkSession spark) {
     Dataset<Row> diffDF = spark.sql(SQL_STRING);
@@ -85,7 +83,7 @@ public class DiffChecker {
     //toCsv(df, "mistakes");
     df = spark.sql(SQL_MIST_COUNT);
     df.show();
-    //toCsv(df, "mistakesCountByRegion");
+    toCsv(df, "mistakesCountByRegion");
   }
 
   public static void main(String[] args) {
