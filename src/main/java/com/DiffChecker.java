@@ -81,9 +81,9 @@ public class DiffChecker {
   public static void diffCsvGenerate(SparkSession spark) {
     Dataset<Row> df = spark.sql("select * from mistakes");
     //toCsv(df, "mistakes");
-    df = spark.sql("select * from mistakes_count");
+    df = spark.sql(SQL_MIST_COUNT);
     df.show();
-    //toCsv(df, "mistakesCountByRegion");
+    toCsv(df, "mistakesCountByRegion");
   }
 
   public static void main(String[] args) {
