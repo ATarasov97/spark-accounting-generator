@@ -7,7 +7,8 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 
 public class DiffChecker {
-  private static String SQL_STRING = "select count(*) from (select\n" +
+  private static String SQL_STRING =
+      "select\n" +
       "MIN(table_name) as table_name,\n" +
       "  inn_1,\n" +
       "  kpp_1,\n" +
@@ -29,10 +30,11 @@ public class DiffChecker {
       "  union all\n" +
       "  select\n" +
       "'customer' as table_name,\n" +
-      "  inn_1,\n" +
-      "  kpp_1,\n" +
-      "  inn_2,\n" +
-      "  kpp_2,\n" +
+          "  inn_2 as inn_1,\n" +
+          "  kpp_2 as kpp_1,\n" +
+          "  inn_1 as inn_2,\n" +
+      "  kpp_1 as kpp_2,\n" +
+
       "  money,\n" +
       "  tax\n" +
       "  from default.customer\n" +
@@ -44,7 +46,7 @@ public class DiffChecker {
       "  kpp_2,\n" +
       "  money,\n" +
       "  tax\n" +
-      "having count(*) = 1)  \n";
+      "having count(*) = 1  \n";
 
   public static String SQL_MIST = "SELECT * from diff where table_name = 'customer'";
 
@@ -108,6 +110,7 @@ public class DiffChecker {
     //Generator g = new Generator();
     //g.generateSellerAndCustomerTables(spark);
     //DiffTableGenerate(spark);
+    diffTableGenerate(spark);
     diffCsvGenerate(spark);
   }
 }
