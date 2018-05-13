@@ -49,8 +49,8 @@ public class DiffChecker {
   public static String SQL_MIST = "SELECT * from diff where table_name = 'customer'";
 
 
-  public static String SQL_MIST_COUNT =
-      "SELECT substr(inn_2,0,2) as region," +
+  public static String SQL_MIST_COUNT = "select region, sum(count) as COUNT from" +
+      "(SELECT substr(inn_2,0,2) as region," +
       " count(*) as COUNT " +
       "from diff " +
       "where table_name = 'customer' \n" +
