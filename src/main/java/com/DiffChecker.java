@@ -51,17 +51,19 @@ public class DiffChecker {
 
   public static String SQL_MIST_COUNT = "select tmp1.region as REG, " +
       "tmp1.MISTAKES as MISTAKES, " +
-      "tmp2.COUNT as ALL" +
-      "from" +
-      "(select region, sum(count) as MISTAKES from" +
-      "(SELECT substr(inn_2,0,2) as region," +
-      " count(*) as COUNT," +
+      "tmp2.COUNT as ALL " +
+      "from " +
+      "(select region, " +
+      " count(*) as MISTAKES " +
+      "from " +
+      "(SELECT substr(inn_2,0,2) as region, " +
       "from diff " +
       "where table_name = 'customer' \n" +
-      "GROUP BY inn_2) tmp group by region)tmp1 " +
+      "GROUP BY inn_2) tmp " +
+      "group by region)tmp1 " +
       "right join " +
       "(select reg , count(*) as COUNT from " +
-      "(select substr(inn_2,0,2) as region) group by region) tmp2" +
+      "(select substr(inn_2,0,2) as region from default.customer) group by region) tmp2 " +
       "on tmp1.region = tmp2.region";
 
   public static void diffTableGenerate(SparkSession spark) {
