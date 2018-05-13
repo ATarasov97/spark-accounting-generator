@@ -65,13 +65,13 @@ public class DiffChecker {
 
   public static void diffCounterGenerate(SparkSession spark) {
     Dataset<Row> diffDF = spark.sql(SQL_MIST);
-    diffDF.show();
-    spark.sql("DROP TABLE IF EXISTS mistakes");
-    diffDF.write().mode("append").saveAsTable("mistakes");
+    //diffDF.show();
+    //spark.sql("DROP TABLE IF EXISTS mistakes");
+    //diffDF.write().mode("append").saveAsTable("mistakes");
     diffDF = spark.sql(SQL_MIST_COUNT);
     diffDF.show();
-    spark.sql("DROP TABLE IF EXISTS mistakes_count");
-    diffDF.write().mode("append").saveAsTable("mistakes_count");
+    //spark.sql("DROP TABLE IF EXISTS mistakes_count");
+    //diffDF.write().mode("append").saveAsTable("mistakes_count");
   }
 
   public static void toCsv(Dataset<Row> df, String name) {
