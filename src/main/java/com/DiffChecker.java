@@ -54,7 +54,6 @@ public class DiffChecker {
           "(SELECT substr(inn_2,0,2) as region," +
           " count(*) as COUNT " +
           "from diff " +
-          "where table_name = 'customer' \n" +
           "GROUP BY inn_2) tmp group by region ) tmp1 " +
           "right join " +
           "(select region , count(*) as KEK from " +
