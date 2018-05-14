@@ -18,9 +18,8 @@ public class DiffChecker {
       "  t2.money,\n" +
       "  t2.tax\n" +
       " FROM\n" +
-    //  "(\n" +      ") tmp\n" +
+      "(\n" +
           "(select\n" +
-          "row_number() as num "+
      // "'seller' as table_name,\n" +
       "  inn_1,\n" +
       "  kpp_1,\n" +
@@ -29,10 +28,9 @@ public class DiffChecker {
       "  money,\n" +
       "  tax\n" +
       "  from default.seller) t1\n" +
-      "  right join \n" +
+      "  union  \n" +
       "  (select\n" +
      // "'customer' as table_name,\n" +
-          "row_number() as num "+
           "  inn_2 as inn_1,\n" +
           "  kpp_2 as kpp_1,\n" +
           "  inn_1 as inn_2,\n" +
@@ -40,8 +38,8 @@ public class DiffChecker {
 
       "  money,\n" +
       "  tax\n" +
-      "  from default.customer) t2 on t1.num = t2.num where t1.inn_2 <> t2.inn_2\n" ;
-
+      "  from default.customer) t2)\n" +
+       " tmp\n" ;
 
   public static String SQL_MIST = "SELECT * from diff where table_name = 'customer'";
 
