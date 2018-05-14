@@ -10,7 +10,7 @@ public class DiffChecker {
 
 
   private static String SQL_STRING =
-      "select MIN (table_name) as table_name\n" +
+      "select MIN (table_name) as table_name,\n" +
           "  inn_1,\n" +
           "  kpp_1,\n" +
           "  inn_2,\n" +
