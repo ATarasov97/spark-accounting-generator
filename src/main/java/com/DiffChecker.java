@@ -19,7 +19,7 @@ public class DiffChecker {
       "  t2.tax\n" +
       " FROM\n" +
     //  "(\n" +      ") tmp\n" +
-          "select\n" +
+          "(select\n" +
      // "'seller' as table_name,\n" +
       "  inn_1,\n" +
       "  kpp_1,\n" +
