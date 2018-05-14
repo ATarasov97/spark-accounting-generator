@@ -8,7 +8,6 @@ import org.apache.spark.sql.SparkSession;
 
 public class DiffChecker {
 
-
   private static String SQL_STRING =
       "select MIN (table_name) as table_name,\n" +
           "  inn_1,\n" +
@@ -48,7 +47,7 @@ public class DiffChecker {
           "  kpp_2,\n" +
           "  money,\n" +
           "  tax\n" +
-          " having count(*) = 1";
+          " having count(table_name) = 1";
 
 
   public static String SQL_MIST = "SELECT * from diff where table_name = 'customer'";
@@ -63,8 +62,8 @@ public class DiffChecker {
           "select region, sum(count) as COUNT from" +
           "(SELECT substr(inn_2,0,2) as region," +
           " count(*) as COUNT " +
-          "from diff where table_name = 'customer'" +
-          "GROUP BY inn_2) tmp group by region ) tmp1 " +
+          "from diff where table_name = 'customer' " +
+          "GROUP BY inn_1) tmp group by region ) tmp1 " +
           "right join " +
           "(select region , count(*) as KEK from " +
           "(select substr(inn_1,0,2) as region from default.customer) group by region) tmp2 " +
