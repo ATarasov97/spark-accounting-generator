@@ -28,7 +28,7 @@ public class DiffChecker {
       "  money,\n" +
       "  tax\n" +
       "  from default.seller" +
-      "  union  \n" +
+      "  union all \n" +
       "  select\n" +
      // "'customer' as table_name,\n" +
           "  inn_2 as inn_1,\n" +
