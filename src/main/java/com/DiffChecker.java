@@ -7,16 +7,7 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 
 public class DiffChecker {
-  private static String s = "select 'customer' as table_name,\n" +
-      "  inn_2 as inn_1,\n" +
-      "  kpp_2 as kpp_1,\n" +
-      "  inn_1 as inn_2,\n" +
-      "  kpp_1 as kpp_2,\n" +
-      "  money,\n" +
-      "  tax\n" +
-      "  from default.customer " +
-      "minus " +
-      "select * from seller\n" ;
+
 
   private static String SQL_STRING =
       "select\n" +
@@ -72,7 +63,7 @@ public class DiffChecker {
 
 
   public static void diffTableGenerate(SparkSession spark) {
-    Dataset<Row> diffDF = spark.sql(s);
+    Dataset<Row> diffDF = spark.sql(SQL_STRING);
     diffDF.show();
     spark.sql("DROP TABLE IF EXISTS diff");
     diffDF.write().mode("append").saveAsTable("diff");
