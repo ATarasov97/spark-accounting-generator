@@ -65,7 +65,6 @@ public class Generator {
             if (random.nextFloat() < 0.05) {
                 customerRecord.setInn_2(inn1.replace("0", "8"));
             }
-            customerRecord.setInn_2(inn1);
             customerRecord.setKpp_2(kpp1);
             customerRecord.setMoney(money);
             customerRecord.setTax(tax);

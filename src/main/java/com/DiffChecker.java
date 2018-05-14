@@ -20,7 +20,7 @@ public class DiffChecker {
           " FROM\n" +
           "(\n" +
           "  select\n" +
-          // "'customer' as table_name,\n" +
+           "'customer' as table_name,\n" +
           "  inn_2 as inn_1,\n" +
           "  kpp_2 as kpp_1,\n" +
           "  inn_1 as inn_2,\n" +
@@ -32,7 +32,7 @@ public class DiffChecker {
           +
           "  union all \n" +
           "select\n" +
-          // "'seller' as table_name,\n" +
+           "'seller' as table_name,\n" +
           "  inn_1,\n" +
           "  kpp_1,\n" +
           "  inn_2,\n" +
@@ -48,7 +48,7 @@ public class DiffChecker {
           "  kpp_2,\n" +
           "  money,\n" +
           "  tax\n" +
-          " having count(*) = 2";
+          " having count(*) = 1";
 
 
   public static String SQL_MIST = "SELECT * from diff where table_name = 'customer'";
@@ -63,7 +63,7 @@ public class DiffChecker {
           "select region, sum(count) as COUNT from" +
           "(SELECT substr(inn_2,0,2) as region," +
           " count(*) as COUNT " +
-          "from diff " +
+          "from diff where table_name = 'customer'" +
           "GROUP BY inn_2) tmp group by region ) tmp1 " +
           "right join " +
           "(select region , count(*) as KEK from " +
