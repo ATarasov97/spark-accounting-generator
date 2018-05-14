@@ -62,8 +62,8 @@ public class DiffChecker {
           "select region, sum(count) as COUNT from" +
           "(SELECT substr(inn_2,0,2) as region," +
           " count(*) as COUNT " +
-          "from diff where table_name = 'customer' " +
-          "GROUP BY inn_1) tmp group by region ) tmp1 " +
+          "from diff where table_name = 'seller' " +
+          "GROUP BY inn_2) tmp group by region ) tmp1 " +
           "right join " +
           "(select region , count(*) as KEK from " +
           "(select substr(inn_1,0,2) as region from default.customer) group by region) tmp2 " +
@@ -97,7 +97,7 @@ public class DiffChecker {
     //toCsv(df, "mistakes");
     df = spark.sql(SQL_MIST_COUNT);
     df.show();
-    //toCsv(df, "mistakesCountByRegion");
+    toCsv(df, "ForMasha");
   }
 
   public static void main(String[] args) {
