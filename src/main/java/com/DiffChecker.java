@@ -20,6 +20,7 @@ public class DiffChecker {
       " FROM\n" +
     //  "(\n" +      ") tmp\n" +
           "(select\n" +
+          "row_number() as num "+
      // "'seller' as table_name,\n" +
       "  inn_1,\n" +
       "  kpp_1,\n" +
@@ -31,6 +32,7 @@ public class DiffChecker {
       "  right join \n" +
       "  (select\n" +
      // "'customer' as table_name,\n" +
+          "row_number() as num "+
           "  inn_2 as inn_1,\n" +
           "  kpp_2 as kpp_1,\n" +
           "  inn_1 as inn_2,\n" +
@@ -38,7 +40,7 @@ public class DiffChecker {
 
       "  money,\n" +
       "  tax\n" +
-      "  from default.customer) t2 on t1.rownum = t2.rownum where t1.inn_2 <> t2.inn_2\n" ;
+      "  from default.customer) t2 on t1.num = t2.num where t1.inn_2 <> t2.inn_2\n" ;
 
 
   public static String SQL_MIST = "SELECT * from diff where table_name = 'customer'";
