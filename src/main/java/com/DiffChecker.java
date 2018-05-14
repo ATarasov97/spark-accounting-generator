@@ -19,7 +19,7 @@ public class DiffChecker {
       "  tax\n" +
       " FROM\n" +
       "(\n" +
-          "(select\n" +
+          "select\n" +
      // "'seller' as table_name,\n" +
       "  inn_1,\n" +
       "  kpp_1,\n" +
@@ -27,9 +27,9 @@ public class DiffChecker {
       "  kpp_2,\n" +
       "  money,\n" +
       "  tax\n" +
-      "  from default.seller) t1\n" +
+      "  from default.seller" +
       "  union  \n" +
-      "  (select\n" +
+      "  select\n" +
      // "'customer' as table_name,\n" +
           "  inn_2 as inn_1,\n" +
           "  kpp_2 as kpp_1,\n" +
@@ -38,7 +38,7 @@ public class DiffChecker {
 
       "  money,\n" +
       "  tax\n" +
-      "  from default.customer) t2)\n" +
+      "  from default.customer) \n" +
        " tmp\n" ;
 
   public static String SQL_MIST = "SELECT * from diff where table_name = 'customer'";
