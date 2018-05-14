@@ -57,7 +57,7 @@ public class DiffChecker {
           "GROUP BY inn_2) tmp group by region ) tmp1 " +
           "right join " +
           "(select region , count(*) as KEK from " +
-          "(select substr(inn_2,0,2) as region from default.customer) group by region) tmp2 " +
+          "(select substr(inn_1,0,2) as region from default.customer) group by region) tmp2 " +
           "on tmp1.region = tmp2.region";
 
 
