@@ -38,7 +38,7 @@ public class DiffChecker {
 
       "  money,\n" +
       "  tax\n" +
-      "  from default.customer) t2 on t1.rownum = t2.rownum where t1.inn_2 <> t2.inn_2\n" +
+      "  from default.customer) t2 on t1.rownum = t2.rownum where t1.inn_2 <> t2.inn_2\n" ;
 
 
   public static String SQL_MIST = "SELECT * from diff where table_name = 'customer'";
