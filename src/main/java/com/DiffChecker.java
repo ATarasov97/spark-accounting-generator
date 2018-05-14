@@ -20,27 +20,26 @@ public class DiffChecker {
 
   private static String SQL_STRING =
       "select\n" +
-      "MIN(table_name) as table_name,\n" +
-      "  inn_1,\n" +
-      "  kpp_1,\n" +
-      "  inn_2,\n" +
-      "  kpp_2,\n" +
-      "  money,\n" +
-      "  tax\n" +
+      "  t2.inn_1,\n" +
+      "  t2.kpp_1,\n" +
+      "  t2.inn_2,\n" +
+      "  t2.kpp_2,\n" +
+      "  t2.money,\n" +
+      "  t2.tax\n" +
       " FROM\n" +
-      "(\n" +
-      "  select\n" +
-      "'seller' as table_name,\n" +
+    //  "(\n" +      ") tmp\n" +
+          "select\n" +
+     // "'seller' as table_name,\n" +
       "  inn_1,\n" +
       "  kpp_1,\n" +
       "  inn_2,\n" +
       "  kpp_2,\n" +
       "  money,\n" +
       "  tax\n" +
-      "  from default.seller\n" +
-      "  union all\n" +
-      "  select\n" +
-      "'customer' as table_name,\n" +
+      "  from default.seller) t1\n" +
+      "  right join \n" +
+      "  (select\n" +
+     // "'customer' as table_name,\n" +
           "  inn_2 as inn_1,\n" +
           "  kpp_2 as kpp_1,\n" +
           "  inn_1 as inn_2,\n" +
@@ -48,15 +47,8 @@ public class DiffChecker {
 
       "  money,\n" +
       "  tax\n" +
-      "  from default.customer\n" +
-      ") tmp\n" +
-      "group by\n" +
-      "  inn_1,\n" +
-      "  kpp_1,\n" +
-      "  inn_2,\n" +
-      "  kpp_2,\n" +
-      "  money,\n" +
-      "  tax " ;
+      "  from default.customer) t2 on t1.rownum = t2.rownum where t1.inn_2 <> t2.inn_2\n" +
+
 
   public static String SQL_MIST = "SELECT * from diff where table_name = 'customer'";
 
