@@ -11,12 +11,12 @@ public class DiffChecker {
 
   private static String SQL_STRING =
       "select\n" +
-      "  t2.inn_1,\n" +
-      "  t2.kpp_1,\n" +
-      "  t2.inn_2,\n" +
-      "  t2.kpp_2,\n" +
-      "  t2.money,\n" +
-      "  t2.tax\n" +
+      "  inn_1,\n" +
+      "  kpp_1,\n" +
+      "  inn_2,\n" +
+      "  kpp_2,\n" +
+      "  money,\n" +
+      "  tax\n" +
       " FROM\n" +
       "(\n" +
           "(select\n" +
