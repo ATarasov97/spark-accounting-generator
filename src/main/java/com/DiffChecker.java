@@ -30,7 +30,7 @@ public class DiffChecker {
           "  tax\n" +
           "  from default.customer"
           +
-          "  union  \n" +
+          "  union all \n" +
           "select\n" +
           // "'seller' as table_name,\n" +
           "  inn_1,\n" +
@@ -40,7 +40,16 @@ public class DiffChecker {
           "  money,\n" +
           "  tax\n" +
           "  from default.seller) \n" +
-      " tmp\n";
+      " tmp\n" +
+          "group by "+
+          "  inn_1,\n" +
+          "  kpp_1,\n" +
+          "  inn_2,\n" +
+          "  kpp_2,\n" +
+          "  money,\n" +
+          "  tax\n" +
+          " having count(*) = 2";
+
 
   public static String SQL_MIST = "SELECT * from diff where table_name = 'customer'";
 
