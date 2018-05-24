@@ -108,6 +108,7 @@ public class DiffChecker {
     //Generator g = new Generator();
     //g.generateSellerAndCustomerTables(spark);
     //DiffTableGenerate(spark);
+    Generator.main(new String[]{});
     long beg = System.nanoTime();
     diffGenerate(spark);
     System.out.println("*************************** Time: " +(System.nanoTime() - beg) /1_000 + "***********************************" );
