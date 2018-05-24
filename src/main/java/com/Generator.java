@@ -5,19 +5,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import javax.xml.crypto.Data;
 
-import org.apache.spark.SparkConf;
-import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
-import org.apache.spark.sql.SQLContext;
 import org.apache.spark.sql.SparkSession;
 
 public class Generator {
 
     private static Random random = new Random();
-    private static String[] regions = {"26", "77", "52", "39", "38"};
+    private static String[] regions = new String[95];
+
 
     private String generateINN() {
         StringBuilder inn = new StringBuilder();
@@ -37,6 +34,13 @@ public class Generator {
     }
 
     public void generateSellerAndCustomerTables(SparkSession spark) {
+        for (int i = 0; i < 96; i++) {
+            if (i < 10) {
+                regions[i] = "0" + i;
+            } else {
+                regions[i] = String.valueOf(i);
+            }
+        }
         spark.sql("DROP TABLE IF EXISTS seller");
         spark.sql("DROP TABLE IF EXISTS customer");
         List<Record> seller = new ArrayList<>();
@@ -91,8 +95,9 @@ public class Generator {
                 .getOrCreate();
 
         Generator generator = new Generator();
+        long beg = System.nanoTime();
         generator.generateSellerAndCustomerTables(spark);
-
+        System.out.println("*************************** Time: " +(System.nanoTime() - beg) /1_000 + "***********************************" );
         //Dataset<Row> sellerShow = spark.sql("SELECT * FROM default.seller");
        // sellerShow.show();
        // Dataset<Row> customerShow = spark.sql("SELECT * FROM default.customer");

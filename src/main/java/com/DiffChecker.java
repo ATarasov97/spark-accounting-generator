@@ -62,7 +62,7 @@ public class DiffChecker {
           "select region, sum(count) as COUNT from" +
           "(SELECT substr(inn_2,0,2) as region," +
           " count(*) as COUNT " +
-          "from diff where table_name = 'seller' " +
+          "from ("+ SQL_STRING+") where table_name = 'customer' " +
           "GROUP BY inn_2) tmp group by region ) tmp1 " +
           "right join " +
           "(select region , count(*) as KEK from " +
@@ -92,12 +92,9 @@ public class DiffChecker {
     df.write().csv(name + ".csv");
   }
 
-  public static void diffCsvGenerate(SparkSession spark) {
-    Dataset<Row> df = spark.sql("select * from mistakes");
-    //toCsv(df, "mistakes");
-    df = spark.sql(SQL_MIST_COUNT);
-    df.show();
-    toCsv(df, "ForMasha");
+  public static void diffGenerate(SparkSession spark) {
+    Dataset<Row> df = spark.sql(SQL_MIST_COUNT);
+    df.write().mode("append").saveAsTable("result");
   }
 
   public static void main(String[] args) {
@@ -111,7 +108,9 @@ public class DiffChecker {
     //Generator g = new Generator();
     //g.generateSellerAndCustomerTables(spark);
     //DiffTableGenerate(spark);
-    diffTableGenerate(spark);
-    diffCsvGenerate(spark);
+    long beg = System.nanoTime();
+    diffGenerate(spark);
+    System.out.println("*************************** Time: " +(System.nanoTime() - beg) /1_000 + "***********************************" );
+
   }
 }
