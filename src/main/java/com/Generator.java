@@ -95,9 +95,8 @@ public class Generator {
                 .getOrCreate();
 
         Generator generator = new Generator();
-        long beg = System.nanoTime();
+        //long beg = System.nanoTime();
         generator.generateSellerAndCustomerTables(spark);
-        System.out.println("*************************** Time: " +(System.nanoTime() - beg) /1_000 + "***********************************" );
         //Dataset<Row> sellerShow = spark.sql("SELECT * FROM default.seller");
        // sellerShow.show();
        // Dataset<Row> customerShow = spark.sql("SELECT * FROM default.customer");
