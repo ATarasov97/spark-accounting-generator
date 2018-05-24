@@ -94,7 +94,8 @@ public class DiffChecker {
 
   public static void diffGenerate(SparkSession spark) {
     Dataset<Row> df = spark.sql(SQL_MIST_COUNT);
-    df.write().mode("append").saveAsTable("result");
+    df.show();
+    //df.write().mode("append").saveAsTable("result");
   }
 
   public static void main(String[] args) {
@@ -108,10 +109,10 @@ public class DiffChecker {
     //Generator g = new Generator();
     //g.generateSellerAndCustomerTables(spark);
     //DiffTableGenerate(spark);
-    Generator.main(new String[]{});
-    long beg = System.nanoTime();
+    //Generator.main(new String[]{});
+    //long beg = System.nanoTime();
     diffGenerate(spark);
-    System.out.println("*************************** Time: " +(System.nanoTime() - beg) /1_000 + "***********************************" );
+    //System.out.println("*************************** Time: " +(System.nanoTime() - beg) /1_000 + "***********************************" );
 
   }
 }
