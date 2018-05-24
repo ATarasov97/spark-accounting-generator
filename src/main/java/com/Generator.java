@@ -13,7 +13,7 @@ import org.apache.spark.sql.SparkSession;
 public class Generator {
 
     private static Random random = new Random();
-    private static String[] regions = new String[95];
+    private static String[] regions = new String[96];
 
 
     private String generateINN() {
